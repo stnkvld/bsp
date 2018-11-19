@@ -17,23 +17,13 @@ do
 	read menu_item
 	case $menu_item in
 		1)
-			if [ -d $(pwd) ]
-			then
-				basename "$PWD"
-			else
-				echo "Ошибка: не удалось узнать имя каталога" >&2
-			fi
+			basename "$PWD"
 		;;
 		2)
-			if [ -d $(pwd) ]
-			then
-				ls -- 2>> $log_file || echo "Ошибка: не удалось просмотреть содержимое каталога" >&2
-			else
-				echo "Ошибка: каталог не существует" >&2
-			fi
+			ls -- 2>> $log_file || echo "Ошибка: не удалось просмотреть содержимое каталога" >&2
 		;;
 		3)
-			export LC_TIME=en_US.utf8; date '+%a %b %d %H:%M %Z %Y'
+			export LC_ALL=en_US.utf8; date '+%a %b %d %H:%M %Z %Y'
 		;;
 		4)
 			IFS=
@@ -54,7 +44,7 @@ do
 			then
 				echo "rm: remove file $file_path (yes/no)?"
 				read -r answer || exit 0
-				if [ $answer = yes ] || [ $answer = y ]
+				if [ "$answer" = yes ] || [ "$answer" = y ]
 				then
 					rm -- "$file_path" 2>> $log_file || echo "Ошибка: не удалось удалить файл '$file_path'" >&2
 				fi
